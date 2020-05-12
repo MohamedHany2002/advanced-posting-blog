@@ -1,0 +1,21 @@
+
+
+{%if sent%}
+<h1>Email sent sucessfully to .. {{form.cleaned_data.email}}</h1>
+
+{%else%}
+<form action="." method="POST">
+    {%csrf_token%}
+    <label for="">Email</label>
+    {{form.email}}
+    <button type="submit">submit</button>
+
+    <!-- {%for field in form%}
+        errors{{field.errors}}
+        .. {{field.label_tag}} .. {{field}}
+    {%endfor%} -->
+
+
+</form>
+
+{%endif%}

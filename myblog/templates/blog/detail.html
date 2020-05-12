@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{%block title%}
+<title>details</title>
+
+{%endblock%}
+{%block content%}
+{{post.title}}
+Tags:{{post.tags.all|join:', '}}
+{{post.publish}} by {{post.auther}}
+
+Recommended Posts:
+    <!-- {{posts|join:', '}} ......  -->
+    {%for post in similar_posts%}
+    {{post}} .... {{post.mytags}}...
+    {{post.tags.all|join:', '}} /// 
+    {%endfor%}
+
+{%with comments.count as comments_count%}
+{%if newcomment%}
+<h5>new comment added</h5>
+{%endif%}
+
+<h2>Comments: .. {{comments_count}}</h2>
+{%for comment in comments %}
+    comment number {{forloop.counter}}  is {{comment.text}} created at {{comment.created}} by {{comment.user.username}}
+    <br>
+
+{%endfor%}
+{%endwith%}
+<form action="{%url 'detail' post.slug%}" method="POST">
+    {%csrf_token%}
+    <textarea name="text" placeholder="comment">comment</textarea>
+    <button type="submit">comment</button>
+</form>
+
+<h2>Share your post here  </h2> <a href="{%url 'send_email' post.id%}"> click here</a>
+{%endblock%}
